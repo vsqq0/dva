@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 // import ReactDOM from 'react-dom';
 // import { PullToRefresh, Toast, Flex, WhiteSpace } from 'antd-mobile';
-// import { Button } from 'antd';
-// import Help from '../../utils/help.js';
 import { Layout, Menu, Breadcrumb, Icon, Input, Divider } from 'antd'; // , Upload, Modal
 import './index.less'
 import PicturesWall from "./pic.js";
+import { get } from '../../utils/req'; // , post, put, del
 
 const { SubMenu } = Menu;
 const { Header, Content, Sider } = Layout;
@@ -16,12 +15,12 @@ class App extends Component {
     a:1
   };
 
-  async componentDidMount() {
-    this.setState({a:2})
-  }
 
-  aa=()=>{
-    console.log( this.state)
+  async componentDidMount() {
+    var a = await get('categories');
+    console.log(a);
+    // var b = await post('categories', { name: 'lion', parent_id: '0' });
+    // console.log(b);
   }
 
   render() {

@@ -10,6 +10,7 @@
     "@babel/polyfill": "^7.0.0-beta.40",
     "antd": "^3.4.0",
     "antd-mobile": "^2.1.6",
+    "axios": "^0.18.0",
     "babel-plugin-import": "^1.6.6",
     "dva": "^2.1.0",
     "jquery": "^3.3.1",
