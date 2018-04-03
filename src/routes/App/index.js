@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 // import ReactDOM from 'react-dom';
 // import { PullToRefresh, Toast, Flex, WhiteSpace } from 'antd-mobile';
 import { Button } from 'antd';
-import { get, post, put, del } from '../../utils/req';
+import { get } from '../../utils/req'; // , post, put, del
 
 class App extends Component {
   state = {};
