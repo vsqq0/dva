@@ -1,6 +1,6 @@
 export default {
-  '/*': 'http://localhost:8080/LhtyPC',
-  '/cate': { users: [1,2] },
+  '/*': 'http://www.zjttmall.com',
+  // '/cate': { users: [1,2] },
 };
 
 // "proxy": {

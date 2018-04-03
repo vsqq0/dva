@@ -14,7 +14,6 @@ class LoginWrapper extends Component {
   state = {};
 
   async componentDidMount() {
-    
   }
 
   handleClick = () => {
@@ -43,7 +42,6 @@ class LoginWrapper extends Component {
     });
   };
   //<form id="form" method="post" action='+this.state.action&biz_content=this.state.biz'><input type="submit" value="立即支付" style="display:none;" /></form>  
-  
   render() {
     const { getFieldProps } = this.props.form;
     return (

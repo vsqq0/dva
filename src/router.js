@@ -17,7 +17,7 @@ function RouterConfig({ history, app }) {
       component: () => import("./routes/cart")
     },
     {
-      path: "/chooseAdress",
+      path: "/chooseAdress/*",
       component: () => import("./routes/chooseAdress")
     },
     {
@@ -25,7 +25,7 @@ function RouterConfig({ history, app }) {
       component: () => import("./routes/classify")
     },
     {
-      path: "/classifyLookup",
+      path: "/classifyLookup/*",
       component: () => import("./routes/classifyLookup")
     },
     {
@@ -34,7 +34,7 @@ function RouterConfig({ history, app }) {
     },
     {
       // path: "/details",
-      paths:"/details",
+      path:"/details/*",
       component: () => import("./routes/details")
     },
     {
@@ -46,11 +46,15 @@ function RouterConfig({ history, app }) {
       component: () => import("./routes/flagship")
     },
     {
+      path: "/flagship/*",
+      component: () => import("./routes/flagship")
+    },
+    {
       path: "/login",
       component: () => import("./routes/login")
     },
     {
-      path: "/logistics",
+      path: "/logistics/*",
       component: () => import("./routes/logistics")
     },
     {
@@ -62,7 +66,7 @@ function RouterConfig({ history, app }) {
       component: () => import("./routes/order")
     },
     {
-      path: "/orderDetails",
+      path: "/orderDetails/*",
       component: () => import("./routes/orderDetails")
     },
     {
@@ -70,7 +74,7 @@ function RouterConfig({ history, app }) {
       component: () => import("./routes/newAddress")
     },
     {
-      path: "/payjump",
+      path: "/payjump/*",
       component: () => import("./routes/payjump")
     },
     {
@@ -86,7 +90,11 @@ function RouterConfig({ history, app }) {
       component: () => import("./routes/receipt")
     },
     {
-      paths: "/register",
+      path: "/register/*",
+      component: () => import("./routes/register")
+    },
+    {
+      path: "/register",
       component: () => import("./routes/register")
     },
     {
