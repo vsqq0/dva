@@ -1,7 +1,7 @@
-import "@babel/polyfill";
+import '@babel/polyfill';
 import dva from 'dva';
-//import 'antd/dist/antd.css';  // or 'antd/dist/antd.less'
-import 'antd-mobile/dist/antd-mobile.less';  // or 'antd-mobile/dist/antd-mobile.less'
+import 'antd/dist/antd.css'; // or 'antd/dist/antd.less'
+// import 'antd-mobile/dist/antd-mobile.less';  // or 'antd-mobile/dist/antd-mobile.less'
 import './index.less';
 
 // 1. Initialize

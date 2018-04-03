@@ -1,5 +1,5 @@
 export default {
-  '/*': 'http://www.zjttmall.com',
+  '/*': 'https://coin-cms.herokuapp.com/'
   // '/cate': { users: [1,2] },
 };
 
