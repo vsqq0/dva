@@ -2,12 +2,17 @@ import React, { Component } from 'react';
 // import ReactDOM from 'react-dom';
 // import { PullToRefresh, Toast, Flex, WhiteSpace } from 'antd-mobile';
 import { Button } from 'antd';
-// import Help from '../../utils/help.js';
+import { get, post, put, del } from '../../utils/req';
 
 class App extends Component {
   state = {};
 
-  async componentDidMount() {}
+  async componentDidMount() {
+    var a = await get('categories');
+    console.log(a);
+    // var b = await post('categories', { name: 'lion', parent_id: '0' });
+    // console.log(b);
+  }
 
   render() {
     return (
