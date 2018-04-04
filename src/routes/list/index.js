@@ -5,6 +5,7 @@ import './index.less';
 import PicturesWall from './pic.js';
 import LeftMenu from '../../components/menu';
 import Head from '../../components/head';
+
 // import { get } from '../../utils/req'; // , post, put, del
 
 // const { SubMenu } = Menu;

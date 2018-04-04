@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Layout, Menu, Input } from 'antd';
-import './index.less';
-import { get } from '../../utils/req';
-import $ from '../../utils/help';
+// import './index.less';
+import { get } from '../utils/req';
+import $ from '../utils/help';
 
 const { SubMenu } = Menu;
 const { Sider } = Layout;

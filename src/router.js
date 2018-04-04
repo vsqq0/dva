@@ -11,13 +11,25 @@ function RouterConfig({ history, app }) {
       // models: () => [import("./models/users")],
       // models: () => import('./models/users'),
       component: () => import('./routes/App')
+    },
+    {
+      path: '/list',
+      // models: () => [import("./models/users")],
+      // models: () => import('./models/users'),
+      component: () => import('./routes/list')
+    },
+    {
+      path: '/detail',
+      // models: () => [import("./models/users")],
+      // models: () => import('./models/users'),
+      component: () => import('./routes/detail')
     }
   ];
 
   return (
     <ConnectedRouter history={history}>
       <Switch>
-        <Route exact path="/" render={() => <Redirect to="/App" />} />
+        <Route exact path="/" render={() => <Redirect to="/list" />} />
         {routes.map(({ path, ...dynamics }, key) => (
           <Route
             key={key}
