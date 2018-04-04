@@ -1,20 +1,19 @@
 import React, { Component } from 'react';
 // import ReactDOM from 'react-dom';
-// import { PullToRefresh, Toast, Flex, WhiteSpace } from 'antd-mobile';
-import { Layout, Menu, Breadcrumb, Icon, Input, Divider } from 'antd'; // , Upload, Modal
-import './index.less'
-import PicturesWall from "./pic.js";
+import { Layout, Menu, Breadcrumb, Input, Divider } from 'antd'; // , Upload, Modal
+import './index.less';
+import PicturesWall from './pic.js';
+import LeftMenu from './menu';
 import { get } from '../../utils/req'; // , post, put, del
 
-const { SubMenu } = Menu;
-const { Header, Content, Sider } = Layout;
+// const { SubMenu } = Menu;
+const { Header, Content } = Layout;
 const { TextArea } = Input;
 
 class App extends Component {
   state = {
-    a:1
+    a: 1
   };
-
 
   async componentDidMount() {
     var a = await get('categories');
@@ -26,7 +25,6 @@ class App extends Component {
   render() {
     return (
       <div>
-      <div onClick={this.aa}>qw</div>
         <Layout>
           <Header className="header">
             <div className="logo" />
@@ -36,62 +34,43 @@ class App extends Component {
               defaultSelectedKeys={['2']}
               style={{ lineHeight: '64px' }}
             >
-            <Menu.Item key="1">nav 1</Menu.Item>
-            <Menu.Item key="2">nav 2</Menu.Item>
-            <Menu.Item key="3">nav 3</Menu.Item>
+              <Menu.Item key="1">nav 1</Menu.Item>
+              <Menu.Item key="2">nav 2</Menu.Item>
+              <Menu.Item key="3">nav 3</Menu.Item>
             </Menu>
           </Header>
-        <Layout>
-        <Sider width={200} style={{ background: '#fff' }}>
-          <Menu
-            mode="inline"
-            defaultSelectedKeys={['1']}
-            defaultOpenKeys={['sub1']}
-            style={{ height: '100%', borderRight: 0 }}
-          >
-            <SubMenu key="sub1" title={<span><Icon type="user" />subnav 1</span>}>
-              <Menu.Item key="1">option1</Menu.Item>
-              <Menu.Item key="2">option2</Menu.Item>
-              <Menu.Item key="3">option3</Menu.Item>
-              <Menu.Item key="4">option4</Menu.Item>
-            </SubMenu>
-            <SubMenu key="sub2" title={<span><Icon type="laptop" />subnav 2</span>}>
-              <Menu.Item key="5">option5</Menu.Item>
-              <Menu.Item key="6">option6</Menu.Item>
-              <Menu.Item key="7">option7</Menu.Item>
-              <Menu.Item key="8">option8</Menu.Item>
-            </SubMenu>
-            <SubMenu key="sub3" title={<span><Icon type="notification" />subnav 3</span>}>
-              <Menu.Item key="9">option9</Menu.Item>
-              <Menu.Item key="10">option10</Menu.Item>
-              <Menu.Item key="11">option11</Menu.Item>
-              <Menu.Item key="12">option12</Menu.Item>
-            </SubMenu>
-        </Menu>
-        </Sider>
-        <Layout style={{ padding: '0 24px 24px' }}>
-            <Breadcrumb style={{ margin: '16px 0' }}>
-              <Breadcrumb.Item>Home</Breadcrumb.Item>
-              <Breadcrumb.Item>List</Breadcrumb.Item>
-              <Breadcrumb.Item>App</Breadcrumb.Item>
-            </Breadcrumb>
-            <Content style={{ background: '#fff', padding: 24, margin: 0, minHeight: 280 }}>
-                <div className="example-input" >
-                <Input placeholder="标题一" style={{ width: 300}}/>
-                 <Divider />
-                <Input placeholder="标题二" style={{ width: 300}}/>
-                 <Divider />
-                 <PicturesWall/>
-                 <Divider />
-                 <TextArea rows={4} style={{ width:400}} />
-                 <Divider />
-                 <Input placeholder="外链接" style={{ width: 300}}/>
-                 </div>
-            </Content>
+          <Layout>
+            <LeftMenu />
+            <Layout style={{ padding: '0 24px 24px' }}>
+              <Breadcrumb style={{ margin: '16px 0' }}>
+                <Breadcrumb.Item>Home</Breadcrumb.Item>
+                <Breadcrumb.Item>List</Breadcrumb.Item>
+                <Breadcrumb.Item>App</Breadcrumb.Item>
+              </Breadcrumb>
+              <Content
+                style={{
+                  background: '#fff',
+                  padding: 24,
+                  margin: 0,
+                  minHeight: 280
+                }}
+              >
+                <div className="example-input">
+                  <Input placeholder="标题一" style={{ width: 300 }} />
+                  <Divider />
+                  <Input placeholder="标题二" style={{ width: 300 }} />
+                  <Divider />
+                  <PicturesWall />
+                  <Divider />
+                  <TextArea rows={4} style={{ width: 400 }} />
+                  <Divider />
+                  <Input placeholder="外链接" style={{ width: 300 }} />
+                </div>
+              </Content>
+            </Layout>
+          </Layout>
         </Layout>
-      </Layout>
-  </Layout>
-  </div>
+      </div>
     );
   }
 }
