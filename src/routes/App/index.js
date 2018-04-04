@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 import { Layout, Menu, Breadcrumb, Icon, Input, Divider } from 'antd'; // , Upload, Modal
 import './index.less'
 import PicturesWall from "./pic.js";
-import { get, post, put, del } from '../../utils/req'; // , post, put, del
+import { get } from '../../utils/req'; // , post, put, del
 
 const { SubMenu } = Menu;
 const { Header, Content, Sider } = Layout;
