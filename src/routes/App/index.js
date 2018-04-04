@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 import { Layout, Menu, Breadcrumb, Icon, Input, Divider } from 'antd'; // , Upload, Modal
 import './index.less'
 import PicturesWall from "./pic.js";
-import { get } from '../../utils/req'; // , post, put, del
+import { get, post, put, del } from '../../utils/req'; // , post, put, del
 
 const { SubMenu } = Menu;
 const { Header, Content, Sider } = Layout;
@@ -17,16 +17,16 @@ class App extends Component {
 
 
   async componentDidMount() {
-    var a = await get('categories');
-    console.log(a);
     // var b = await post('categories', { name: 'lion', parent_id: '0' });
     // console.log(b);
+    var a = await get('categories');
+    console.log(a.data);
+
   }
 
   render() {
     return (
       <div>
-      <div onClick={this.aa}>qw</div>
         <Layout>
           <Header className="header">
             <div className="logo" />
