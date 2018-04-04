@@ -1,3 +1,4 @@
+// const url = 'http://localhost:3000/';
 const url = 'https://coin-cms.herokuapp.com/';
 export default {
   // '/*': 'https://coin-cms.herokuapp.com/'

@@ -1,70 +1,58 @@
 import React, { Component } from 'react';
-// import ReactDOM from 'react-dom';
-import { Layout, Menu, Icon } from 'antd'; // , Upload, Modal
+import { Layout, Menu, Input } from 'antd';
 import './index.less';
-import { get } from '../../utils/req'; // , post, put, del
+import { get } from '../../utils/req';
+import $ from '../../utils/help';
 
 const { SubMenu } = Menu;
 const { Sider } = Layout;
 
 class App extends Component {
-  state = {};
+  state = {
+    data: [],
+    menuKey: 0
+  };
 
   async componentDidMount() {
+    // var b = await post('categories', { name: 'tiger', parent_id: '16' });
+    // console.log(b);
     var a = await get('categories');
     console.log(a);
-    // var b = await post('categories', { name: 'lion', parent_id: '0' });
-    // console.log(b);
+    this.setState({ data: $.arrayToTree(a.data.data) });
   }
+
+  renderMenu = data => {
+    return data.map(item => {
+      // this.setState({ menuKey: key });
+      if (item.children && item.children.length > 0) {
+        return (
+          <SubMenu key={item.id} title={<span>{item.name || '未命名'}</span>}>
+            {this.renderMenu(item.children)}
+          </SubMenu>
+        );
+      }
+      return (
+        <Menu.Item key={item.id}>
+          <div>
+            <span>{item.name || '未命名'}</span>
+            <span style={{ float: 'right' }}>X</span>
+          </div>
+        </Menu.Item>
+      );
+    });
+  };
 
   render() {
     return (
-      <Sider width={200} style={{ background: '#fff' }}>
+      <Sider style={{ background: '#fff' }}>
+        <Input placeholder="添加总分类" />
         <Menu
           mode="inline"
           defaultSelectedKeys={['1']}
           defaultOpenKeys={['sub1']}
           style={{ height: '100%', borderRight: 0 }}
         >
-          <SubMenu
-            key="sub1"
-            title={
-              <span>
-                <Icon type="user" />subnav 1
-              </span>
-            }
-          >
-            <Menu.Item key="1">option1</Menu.Item>
-            <Menu.Item key="2">option2</Menu.Item>
-            <Menu.Item key="3">option3</Menu.Item>
-            <Menu.Item key="4">option4</Menu.Item>
-          </SubMenu>
-          <SubMenu
-            key="sub2"
-            title={
-              <span>
-                <Icon type="laptop" />subnav 2
-              </span>
-            }
-          >
-            <Menu.Item key="5">option5</Menu.Item>
-            <Menu.Item key="6">option6</Menu.Item>
-            <Menu.Item key="7">option7</Menu.Item>
-            <Menu.Item key="8">option8</Menu.Item>
-          </SubMenu>
-          <SubMenu
-            key="sub3"
-            title={
-              <span>
-                <Icon type="notification" />subnav 3
-              </span>
-            }
-          >
-            <Menu.Item key="9">option9</Menu.Item>
-            <Menu.Item key="10">option10</Menu.Item>
-            <Menu.Item key="11">option11</Menu.Item>
-            <Menu.Item key="12">option12</Menu.Item>
-          </SubMenu>
+          {this.renderMenu(this.state.data)}
         </Menu>
       </Sider>
     );

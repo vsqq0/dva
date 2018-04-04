@@ -9,6 +9,28 @@ import querystring from 'querystring';
 
 export default class Help {
   /**
+   * 数组转树结构
+   */
+  static arrayToTree(tree) {
+    let data = [];
+    let findKid = dad => {
+      dad.children = [];
+      tree.map((kid, i1) => {
+        if (kid['parent_id'] === dad.id) {
+          findKid(kid);
+          dad.children.push(kid);
+        }
+      });
+      data.push(dad);
+    };
+    tree.map((dad, i) => {
+      if (dad['parent_id'] === null) {
+        findKid(dad);
+      }
+    });
+    return data;
+  }
+  /**
    * 判断是否是微信打开
    */
   static isWeixin() {
