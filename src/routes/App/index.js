@@ -4,7 +4,7 @@ import { Layout, Menu, Breadcrumb, Input, Divider } from 'antd'; // , Upload, Mo
 import './index.less';
 import PicturesWall from './pic.js';
 import LeftMenu from './menu';
-import { get } from '../../utils/req'; // , post, put, del
+// import { get } from '../../utils/req'; // , post, put, del
 
 // const { SubMenu } = Menu;
 const { Header, Content } = Layout;
@@ -16,8 +16,8 @@ class App extends Component {
   };
 
   async componentDidMount() {
-    var a = await get('categories');
-    console.log(a);
+    // var a = await get('categories');
+    // console.log(a);
     // var b = await post('categories', { name: 'lion', parent_id: '0' });
     // console.log(b);
   }
