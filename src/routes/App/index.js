@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 // import ReactDOM from 'react-dom';
 // import { PullToRefresh, Toast, Flex, WhiteSpace } from 'antd-mobile';
-import { Layout, Menu, Breadcrumb, Icon, Input, Divider } from 'antd'; // , Upload, Modal
+import { Layout, Menu, Breadcrumb, Icon, Input, Divider, Button,Form } from 'antd'; // , Upload, Modal
 import './index.less'
 import PicturesWall from "./pic.js";
 import { get, post, put, del } from '../../utils/req'; // , post, put, del
@@ -78,6 +78,7 @@ class App extends Component {
             <Content style={{ background: '#fff', padding: 24, margin: 0, minHeight: 280 }}>
                 <div className="example-input" >
                 <Input placeholder="标题一" style={{ width: 300}}/>
+                 
                  <Divider />
                 <Input placeholder="标题二" style={{ width: 300}}/>
                  <Divider />
@@ -86,6 +87,8 @@ class App extends Component {
                  <TextArea rows={4} style={{ width:400}} />
                  <Divider />
                  <Input placeholder="外链接" style={{ width: 300}}/>
+                 <Divider />
+                 <Button type="primary"style={{ width: 300}}>提交</Button>
                  </div>
             </Content>
         </Layout>
