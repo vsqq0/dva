@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Spin, Popconfirm, message, Layout, Menu, Input } from 'antd';
-// import './index.less';
-import { get, del, post } from '../utils/req';
-import $ from '../utils/help';
+import './index.less';
+import { get, del, post } from '../../utils/req';
+import $ from '../../utils/help';
 
 const Search = Input.Search;
 const { SubMenu } = Menu;
@@ -51,29 +51,71 @@ class App extends Component {
     const event = e;
     this.setState({ kidCateName: event.target.value });
   };
-
+  menuSelect = e => {
+    // console.log(e);
+    e.domEvent.stopPropagation();
+  };
   // 树结构的菜单列表
   renderMenu = data => {
     return data.map(item => {
       // this.setState({ menuKey: key });
       if (item.children && item.children.length > 0) {
         return (
-          <SubMenu key={item.id} title={<span>{item.name || '未命名'}</span>}>
+          <SubMenu
+            key={item.id}
+            title={
+              <div>
+                <Popconfirm
+                  title={
+                    <span>
+                      <span> 添加{item.name}的子分类：</span>
+                      <Input
+                        onBlur={this.setKidCateName.bind(this)}
+                        style={{ display: 'block' }}
+                        placeholder="请填写子分类的名称"
+                      />
+                    </span>
+                  }
+                  onConfirm={this.addCate.bind(
+                    this,
+                    this.state.kidCateName,
+                    item.id
+                  )}
+                  okText="是"
+                  cancelText="否"
+                >
+                  <span style={{ marginRight: 5 }}>+</span>
+                </Popconfirm>
+                <span>{item.name || '未命名'}</span>
+                <Popconfirm
+                  title="确认要删除吗?"
+                  onConfirm={this.delCate.bind(this, item.id)}
+                  okText="是"
+                  cancelText="否"
+                >
+                  <span style={{ float: 'right' }}>X</span>
+                </Popconfirm>
+              </div>
+            }
+          >
             {this.renderMenu(item.children)}
           </SubMenu>
         );
       }
       return (
-        <Menu.Item key={item.id}>
+        <Menu.Item
+          // style={{ position: 'relative', overflow: 'visible' }}
+          key={item.id}
+        >
           <div>
-            <span>
+            <span>{item.name || '未命名'}</span>
+            <div style={{ position: 'absolute', top: 0, right: 0 }}>
               <Popconfirm
                 title={
                   <span>
                     <span> 添加{item.name}的子分类：</span>
                     <Input
                       onBlur={this.setKidCateName.bind(this)}
-                      // enterButton="提交"
                       style={{ display: 'block' }}
                       placeholder="请填写子分类的名称"
                     />
@@ -89,23 +131,20 @@ class App extends Component {
               >
                 <span style={{ marginRight: 5 }}>+</span>
               </Popconfirm>
-              <span>{item.name || '未命名'}</span>
-            </span>
-            <Popconfirm
-              title="确认要删除吗?"
-              onConfirm={this.delCate.bind(this, item.id)}
-              // onCancel={this.cancel}
-              okText="是"
-              cancelText="否"
-            >
-              <span style={{ float: 'right' }}>X</span>
-            </Popconfirm>
+              <Popconfirm
+                title="确认要删除吗?"
+                onConfirm={this.delCate.bind(this, item.id)}
+                okText="是"
+                cancelText="否"
+              >
+                <span>X</span>
+              </Popconfirm>
+            </div>
           </div>
         </Menu.Item>
       );
     });
   };
-
   render() {
     return (
       <Sider style={{ background: '#fff' }}>
@@ -119,6 +158,7 @@ class App extends Component {
         <Spin spinning={this.state.menuLoading}>
           <Menu
             // theme="dark"
+            onSelect={this.menuSelect}
             mode="inline"
             // defaultSelectedKeys={['1']}
             // defaultOpenKeys={['sub1']}
