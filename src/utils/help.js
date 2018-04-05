@@ -1,6 +1,5 @@
 import $ from 'jquery';
 // import React from 'react';
-// import { Toast } from 'antd-mobile';
 // import { resolve } from "path";
 import querystring from 'querystring';
 //todo 把jquery改为fetch兼容ie8以上 fetch不支持ie
@@ -24,7 +23,7 @@ export default class Help {
       data.push(dad);
     };
     tree.map((dad, i) => {
-      if (dad['parent_id'] === null) {
+      if (dad['parent_id'] === 0) {
         findKid(dad);
       }
     });

@@ -5,7 +5,7 @@ import './index.less';
 import PicturesWall from './pic.js';
 import LeftMenu from '../../components/menu';
 import Head from '../../components/head';
-
+import TableList from './table.js'
 // import { get } from '../../utils/req'; // , post, put, del
 
 // const { SubMenu } = Menu;
@@ -46,7 +46,7 @@ class App extends Component {
                   minHeight: 280
                 }}
               >
-                
+                <TableList/>
               </Content>
             </Layout>
           </Layout>
