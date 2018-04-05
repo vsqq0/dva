@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import { Table, Popconfirm, message, Input } from 'antd';
+import { Table, Popconfirm, message, Layout, Input } from 'antd';
 import './index.less';
 import { get, del, post } from '../../utils/req';
 import $ from '../../utils/help';
 
 const Search = Input.Search;
+const { Sider } = Layout;
 
 class App extends Component {
   state = {
@@ -16,9 +17,7 @@ class App extends Component {
   };
 
   async componentDidMount() {
-    this.setState({ menuLoading: true });
     await this.cateReload();
-    this.setState({ menuLoading: false });
   }
 
   // 读取菜单列表
@@ -55,14 +54,14 @@ class App extends Component {
     const event = e;
     this.setState({ kidCateName: event.target.value });
   };
-
+ 
   render() {
     const columns = [
       {
         title: '',
         dataIndex: 'name',
         key: 'name',
-        render: (text, record) => <a style={{ fontSize: '14px' }}>{text}</a>
+        render: (text, record) => <a style={{ fontSize: '14px' }} onClick={this.showDetail.bind(this, record)}>{text}</a>
       },
       {
         title: '',
@@ -99,40 +98,12 @@ class App extends Component {
             >
               <a>删除</a>
             </Popconfirm>
-            <span style={{ padding: 3 }}>|</span>
-            <Popconfirm
-              title={
-                <span>
-                  <span> 添加{record.name}的子分类：</span>
-                  <Input
-                    onBlur={this.setKidCateName.bind(this)}
-                    style={{ display: 'block' }}
-                    placeholder="请填写子分类的名称"
-                  />
-                </span>
-              }
-              onConfirm={this.addCate.bind(
-                this,
-                this.state.kidCateName,
-                record.id
-              )}
-              okText="是"
-              cancelText="否"
-            >
-              <a>改名</a>
-            </Popconfirm>
           </span>
         )
       }
     ];
     return (
-      <div
-        style={{
-          float: 'left',
-          background: '#fff',
-          minWidth: '200px'
-        }}
-      >
+      <Sider style={{ background: '#fff' }}>
         <div style={{ padding: 15 }}>
           <Search
             placeholder="添加总分类"
@@ -146,10 +117,10 @@ class App extends Component {
           pagination={false}
           loading={this.state.menuLoading}
           columns={columns}
-          // rowSelection={{ style: { background: 'red' }, type: 'radio' }}
+          // rowSelection={{ type: 'radio' }}
           dataSource={this.state.data}
         />
-      </div>
+      </Sider>
     );
   }
 }
