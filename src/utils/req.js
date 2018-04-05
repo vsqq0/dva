@@ -16,9 +16,7 @@ import axios from 'axios';
  * @returns {Object} params
  */
 export const get = (url, params) => {
-  return axios.get(devUrl(url), {
-    params: params || {}
-  });
+  return axios.get(devUrl(url), params);
 };
 
 /**
@@ -26,27 +24,21 @@ export const get = (url, params) => {
  * @returns {Object} params
  */
 export const post = (url, params) => {
-  return axios.post(devUrl(url), {
-    params: params || {}
-  });
+  return axios.post(devUrl(url), params);
 };
 /**
  * @param {string} url 必填
  * @returns {Object} params
  */
 export const put = (url, params) => {
-  return axios.put(devUrl(url), {
-    params: params || {}
-  });
+  return axios.put(devUrl(url), params);
 };
 /**
  * @param {string} url 必填
  * @returns {Object} params
  */
 export const del = (url, params) => {
-  return axios.delete(devUrl(url), {
-    params: params || {}
-  });
+  return axios.delete(devUrl(url), params);
 };
 /**
  * ajax请求 可以传一个对象或者url字符串
