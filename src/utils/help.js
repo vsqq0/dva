@@ -17,7 +17,9 @@ export default class Help {
       tree.map((kid, i1) => {
         if (kid['parent_id'] === dad.id) {
           findKid(kid);
-          kid['children'] = undefined;
+          if (kid['children'].length === 0) {
+            kid['children'] = undefined;
+          }
           dad['children'].push(kid);
         }
       });

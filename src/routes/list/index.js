@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 // import ReactDOM from 'react-dom';
-import { Layout, Breadcrumb} from 'antd'; // , Upload, Modal, Divider 
+import { Layout, Breadcrumb } from 'antd'; // , Upload, Modal, Divider
 import './index.less';
 import LeftMenu from '../../components/menu';
 import Head from '../../components/head';
-import TableList from './table.js'
+import TableList from './table.js';
 // import { get } from '../../utils/req'; // , post, put, del
 
 // const { SubMenu } = Menu;
@@ -26,30 +26,32 @@ class App extends Component {
   render() {
     return (
       <div>
-        <Layout>
-          <Head />
+        <Head />
 
-          <Layout>
-            <LeftMenu />
-            <Layout style={{ padding: '0 24px 24px' }}>
-              <Breadcrumb style={{ margin: '16px 0' }}>
-                <Breadcrumb.Item>Home</Breadcrumb.Item>
-                <Breadcrumb.Item>List</Breadcrumb.Item>
-                <Breadcrumb.Item>App</Breadcrumb.Item>
-              </Breadcrumb>
-              <Content
-                style={{
-                  background: '#fff',
-                  padding: 24,
-                  margin: 0,
-                  minHeight: 280
-                }}
-              >
-                <TableList/>
-              </Content>
-            </Layout>
-          </Layout>
-        </Layout>
+        <LeftMenu />
+        <div
+          style={{
+            overflow: 'hidden',
+            background: 'gainsboro',
+            padding: '0 24px 24px'
+          }}
+        >
+          <Breadcrumb style={{ margin: '16px 0' }}>
+            <Breadcrumb.Item>Home</Breadcrumb.Item>
+            <Breadcrumb.Item>List</Breadcrumb.Item>
+            <Breadcrumb.Item>App</Breadcrumb.Item>
+          </Breadcrumb>
+          <Content
+            style={{
+              background: '#fff',
+              padding: 24,
+              margin: 0,
+              minHeight: 280
+            }}
+          >
+            <TableList />
+          </Content>
+        </div>
       </div>
     );
   }
