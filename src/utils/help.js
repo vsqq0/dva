@@ -17,10 +17,14 @@ export default class Help {
       tree.map((kid, i1) => {
         if (kid['parent_id'] === dad.id) {
           findKid(kid);
+          kid['children'] = undefined;
           dad['children'].push(kid);
         }
       });
       if (dad['parent_id'] === 0) {
+        if (dad['children'].length === 0) {
+          dad['children'] = undefined;
+        }
         data.push(dad);
       }
     };
