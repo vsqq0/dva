@@ -12,18 +12,23 @@ class App extends Component {
   state = {
     data: [],
     menuKey: 0,
-    menuLoading: false
+    menuLoading: false,
+    selectId: 1,
+    kidCateName: ''
   };
 
   async componentDidMount() {
     await this.cateReload();
   }
 
+  // 读取菜单列表
   cateReload = async () => {
-    var a = await get('categories');
-    this.setState({ data: $.arrayToTree(a.data.data) });
+    let categories = await get('categories');
+    console.log($.arrayToTree(categories.data.data));
+    this.setState({ data: $.arrayToTree(categories.data.data) });
   };
 
+  // 删除菜单分类
   delCate = async id => {
     this.setState({ menuLoading: true });
     await del('/categories/' + id);
@@ -32,6 +37,7 @@ class App extends Component {
     this.setState({ menuLoading: false });
   };
 
+  // 添加总分类
   addCate = async (name, parentId) => {
     this.setState({ menuLoading: true });
     await post('/categories', { name: name, parent_id: parentId || 0 });
@@ -40,6 +46,13 @@ class App extends Component {
     this.setState({ menuLoading: false });
   };
 
+  // 设置子分类名
+  setKidCateName = e => {
+    const event = e;
+    this.setState({ kidCateName: event.target.value });
+  };
+
+  // 树结构的菜单列表
   renderMenu = data => {
     return data.map(item => {
       // this.setState({ menuKey: key });
@@ -53,7 +66,31 @@ class App extends Component {
       return (
         <Menu.Item key={item.id}>
           <div>
-            <span>{item.name || '未命名'}</span>
+            <span>
+              <Popconfirm
+                title={
+                  <span>
+                    <span> 添加{item.name}的子分类：</span>
+                    <Input
+                      onBlur={this.setKidCateName.bind(this)}
+                      // enterButton="提交"
+                      style={{ display: 'block' }}
+                      placeholder="请填写子分类的名称"
+                    />
+                  </span>
+                }
+                onConfirm={this.addCate.bind(
+                  this,
+                  this.state.kidCateName,
+                  item.id
+                )}
+                okText="是"
+                cancelText="否"
+              >
+                <span style={{ marginRight: 5 }}>+</span>
+              </Popconfirm>
+              <span>{item.name || '未命名'}</span>
+            </span>
             <Popconfirm
               title="确认要删除吗?"
               onConfirm={this.delCate.bind(this, item.id)}
@@ -83,8 +120,8 @@ class App extends Component {
           <Menu
             // theme="dark"
             mode="inline"
-            defaultSelectedKeys={['1']}
-            defaultOpenKeys={['sub1']}
+            // defaultSelectedKeys={['1']}
+            // defaultOpenKeys={['sub1']}
             style={{ height: '100%', borderRight: 0 }}
           >
             {this.renderMenu(this.state.data)}

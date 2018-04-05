@@ -13,14 +13,16 @@ export default class Help {
   static arrayToTree(tree) {
     let data = [];
     let findKid = dad => {
-      dad.children = [];
+      dad['children'] = [];
       tree.map((kid, i1) => {
         if (kid['parent_id'] === dad.id) {
           findKid(kid);
-          dad.children.push(kid);
+          dad['children'].push(kid);
         }
       });
-      data.push(dad);
+      if (dad['parent_id'] === 0) {
+        data.push(dad);
+      }
     };
     tree.map((dad, i) => {
       if (dad['parent_id'] === 0) {
