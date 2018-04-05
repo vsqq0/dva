@@ -67,7 +67,7 @@ class TableList extends React.Component {
             loading={loading}
           >
             <Popconfirm title="确认删除这些数据吗?" onConfirm={this.start}  okText="删除" cancelText="取消">
-                  <a href="#">删除</a>
+                  <a >删除</a>
             </Popconfirm>
           </Button>
           <span style={{ marginLeft: 8 }}>
