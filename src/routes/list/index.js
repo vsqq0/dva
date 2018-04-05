@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 // import ReactDOM from 'react-dom';
-import { Layout, Breadcrumb, Input} from 'antd'; // , Upload, Modal, Divider 
+import { Layout, Breadcrumb} from 'antd'; // , Upload, Modal, Divider 
 import './index.less';
 import LeftMenu from '../../components/menu';
 import Head from '../../components/head';

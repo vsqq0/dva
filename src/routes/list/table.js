@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Table, Button, Popconfirm } from 'antd';
 //表格字段
 const columns = [{

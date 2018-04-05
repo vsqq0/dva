@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Layout, Menu, Breadcrumb, Input, Divider } from 'antd'; // , Upload, Modal
+import { Layout, Breadcrumb, Input, Divider } from 'antd'; // , Upload, Modal
 import './index.less'
 import PicturesWall from "./pic.js";
 import { get } from '../../utils/req'; // , post, put, del
