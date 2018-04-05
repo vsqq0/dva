@@ -55,13 +55,27 @@ class App extends Component {
     this.setState({ kidCateName: event.target.value });
   };
  
+  // 查询分类的详情列表
+  cateClick = async record => {
+    window.location.hash = '#/list?' + record.id;
+    let data = await post('cate_details', { category_id: record.id });
+    console.log(data);
+  };
+
   render() {
     const columns = [
       {
         title: '',
         dataIndex: 'name',
         key: 'name',
-        render: (text, record) => <a style={{ fontSize: '14px' }} onClick={this.showDetail.bind(this, record)}>{text}</a>
+        render: (text, record) => (
+          <a
+            onClick={this.cateClick.bind(this, record)}
+            style={{ fontSize: '14px' }}
+          >
+            {text}
+          </a>
+        )
       },
       {
         title: '',
