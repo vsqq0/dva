@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 // import ReactDOM from 'react-dom';
-import { Layout, Breadcrumb, Input, Divider } from 'antd'; // , Upload, Modal
+import { Layout, Breadcrumb, Input} from 'antd'; // , Upload, Modal, Divider 
 import './index.less';
-import PicturesWall from './pic.js';
 import LeftMenu from '../../components/menu';
 import Head from '../../components/head';
 import TableList from './table.js'
@@ -10,7 +9,7 @@ import TableList from './table.js'
 
 // const { SubMenu } = Menu;
 const { Content } = Layout;
-const { TextArea } = Input;
+//const { TextArea } = Input;
 
 class App extends Component {
   state = {

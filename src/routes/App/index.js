@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
-import { Layout, Menu, Breadcrumb, Icon, Input, Divider } from 'antd'; // , Upload, Modal
+import { Layout, Menu, Breadcrumb, Input, Divider } from 'antd'; // , Upload, Modal
 import './index.less'
 import PicturesWall from "./pic.js";
 import { get } from '../../utils/req'; // , post, put, del
 import LeftMenu from '../../components/menu';
 import Head from '../../components/head';
 
-const { SubMenu } = Menu;
-const { Header, Content, Sider } = Layout;
+const { Content} = Layout;
 const { TextArea } = Input;
 
 class App extends Component {
