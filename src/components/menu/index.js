@@ -58,7 +58,7 @@ class App extends Component {
   // 查询分类的详情列表
   cateClick = async record => {
     window.location.hash = '#/list?' + record.id;
-    let data = await post('cate_details', { category_id: record.id });
+    let data = await get('cate_details', { category_id: record.id });
     console.log(data);
   };
 
