@@ -21,7 +21,6 @@ class App extends Component {
     }
   }
   getCateData = data => {
-    // console.log(this.state, data);
     this.setState({ data: data });
   };
   render() {
