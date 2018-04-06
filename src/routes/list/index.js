@@ -20,6 +20,15 @@ class App extends Component {
       this.setState({ data: $.setKeyById(data.data.data) });
     }
   }
+  deleteOneData=(id)=>{
+    // todo delete data
+    let data = this.state.data.filter((o,i)=>{
+      if(o.id!==id){
+        return o
+      }
+    })
+    this.setState({ data: data });
+  }
   getCateData = data => {
     this.setState({ data: data });
   };
@@ -28,7 +37,7 @@ class App extends Component {
       <div>
         <Head />
 
-        <LeftMenu getCateData={this.getCateData} />
+        <LeftMenu deleteOneData={this.deleteOneData} getCateData={this.getCateData} />
         <div
           style={{
             overflow: 'hidden',

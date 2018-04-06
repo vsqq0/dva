@@ -1,5 +1,6 @@
 import React from 'react';
 import { Table, Button, Popconfirm } from 'antd';
+import { del } from '../../utils/req'; // , post, put, del
 //表格字段
 const columns = [
   {
@@ -21,10 +22,12 @@ class TableList extends React.Component {
     selectedRowKeys: [], // Check here to configure the default column
     loading: false
   };
-  start = () => {
+  start = async () => {
     this.setState({ loading: true });
     // ajax request after empty completing
     //发送delete请求删除数据
+    await del('/cate_details/'+this.state.selectedRowKeys);
+    this.props.deleteOneData(this.state.selectedRowKeys)
     console.log(this.state.selectedRowKeys);
 
     setTimeout(() => {
