@@ -57,8 +57,10 @@ class App extends Component {
   // 查询分类的详情列表
   cateClick = async record => {
     $.setCookie('category_id', record.id);
-    let data = await get('categories/' + record.id);
-    this.props.getCateData($.setKeyById(data.data.data));
+    if (this.props.getCateData !== undefined) {
+      let data = await get('categories/' + record.id);
+      this.props.getCateData($.setKeyById(data.data.data));
+    }
   };
   render() {
     const columns = [
