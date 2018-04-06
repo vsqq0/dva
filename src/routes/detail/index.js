@@ -6,21 +6,30 @@ import PicturesWall from './pic.js';
 import LeftMenu from '../../components/menu';
 import Head from '../../components/head';
 import $ from '../../utils/help';
-import { post } from '../../utils/req'; // , post, put, del
+import { post,get } from '../../utils/req'; // , post, put, del
 
 // const { SubMenu } = Menu;
 const { Content } = Layout;
 const { TextArea } = Input;
 
 class App extends Component {
-  state = {};
+  state = {
+    detail_id:'',
+    data:[]
+  };
 
   async componentDidMount() {
     // var a = await get('categories');
     // console.log(a);
     // var b = await post('categories', { name: 'lion', parent_id: '0' });
     // console.log(b);
-    console.log($.getCookie('category_id'));
+    //判断是新增还是修改
+    var id=window.location.href.split("detailId=")[1];
+    if(id !=null & id!=''){
+      this.setState({detail_id:id});
+      var data=(await get('cate_details/'+id)).data.data;
+      this.setState({data:data});
+    }
   }
 
   submit = () => {
@@ -60,15 +69,15 @@ class App extends Component {
             <div className="example-input">
               <a onClick={this.submit}>提交</a>
 
-              <Input placeholder="标题一" style={{ width: 300 }} />
+              <Input placeholder="标题一" style={{ width: 300 }} value={this.state.data.title} />
               <Divider />
-              <Input placeholder="标题二" style={{ width: 300 }} />
+              <Input placeholder="标题二" style={{ width: 300 }} value={this.state.data.title2}/>
               <Divider />
               <PicturesWall />
               <Divider />
-              <TextArea rows={4} style={{ width: 400 }} />
+              <TextArea rows={4} style={{ width: 400 }} value={this.state.data.text}/>
               <Divider />
-              <Input placeholder="外链接" style={{ width: 300 }} />
+              <Input placeholder="外链接" style={{ width: 300 }} value={this.state.data.link}/>
             </div>
           </Content>
         </div>
