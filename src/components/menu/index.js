@@ -28,7 +28,6 @@ class App extends Component {
       o.key = o.id;
       return o;
     });
-    console.log($.arrayToTree(data), data);
     this.setState({ data: $.arrayToTree(data) });
   };
 
@@ -57,10 +56,9 @@ class App extends Component {
   };
   // 查询分类的详情列表
   cateClick = async record => {
-    // window.location.hash = '#/list?' + record.id;
     $.setCookie('category_id', record.id);
-    let data = await get('cate_details', { category_id: record.id });
-    console.log(data);
+    let data = await get('categories/' + record.id);
+    this.props.getCateData($.setKeyById(data.data.data));
   };
   render() {
     const columns = [

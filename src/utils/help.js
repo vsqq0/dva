@@ -7,6 +7,15 @@ import querystring from 'querystring';
 //https://openapi.alipay.com/gateway.do?charset=utf-8&method=alipay.trade.wap.pay&sign=Si6ZgkMFDYMBNxDm%2FaFqUmBEOg9asMH7zSj6B1C%2FHkvph%2FSov3nNDCxhkDmEMVv%2FVc719FfIwk6y0eZVYCHpXf5eq2IYKIVAAgoQrFny%2BEHLnsMGJQqENMp5Lg6infPtFiFv2Mfye05ixFK6yUWsVqkoiuj19KSFfXE7XBT%2FXQsLkfVlpKdVWcpnysrprbvOC6qkgM8FdUlCfdf79l3iZ%2BNxZ83pn%2BJsFH4uCxFKFJ79A0gwyd6du1o3xB%2Btv%2BHycCOnE669AMa9g%2FK5YAS%2BE%2BMni0j%2FwcMYMLgteehPRtZ%2BCONQY2Agoq6vAVsJ7XMO2cXACt101IgevDh%2FastaLQ%3D%3D&return_url=http%3A%2F%2Flocalhost%3A8080%2FLhtyPC%2Fpay%2Freturn_url.jsp&notify_url=http%3A%2F%2Fwww.zjttmall.com%2Falipaynotify&version=1.0&app_id=2017031306205218&sign_type=RSA2&timestamp=2018-02-07+10%3A57%3A59&alipay_sdk=alipay-sdk-java-dynamicVersionNo&format=json&biz_content={"body":"wqe","out_trade_no":"dsad","product_code":"QUICK_WAP_WAY","subject":"qwewq","timeout_express":"2m","total_amount":"1.00"}
 
 export default class Help {
+  /*
+  * 给数组设置key通过id
+  */
+  static setKeyById(arr) {
+    return arr.map((o, i) => {
+      o['key'] = o['id'];
+      return o;
+    });
+  }
   /**
    * 数组转树结构
    */
