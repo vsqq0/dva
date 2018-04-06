@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-// import ReactDOM from 'react-dom';
 import { Layout, Breadcrumb } from 'antd'; // , Upload, Modal, Divider
 import './index.less';
 import LeftMenu from '../../components/menu';
@@ -7,9 +6,7 @@ import Head from '../../components/head';
 import TableList from './table.js';
 // import { get } from '../../utils/req'; // , post, put, del
 
-// const { SubMenu } = Menu;
 const { Content } = Layout;
-//const { TextArea } = Input;
 
 class App extends Component {
   state = {
@@ -17,7 +14,7 @@ class App extends Component {
   };
 
   async componentDidMount() {
-    // var a = await get('categories');
+    // var a = await get('cate_details',{category_id:16});
     // console.log(a);
     // var b = await post('categories', { name: 'lion', parent_id: '0' });
     // console.log(b);

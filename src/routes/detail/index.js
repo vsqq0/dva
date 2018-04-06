@@ -27,40 +27,42 @@ class App extends Component {
   render() {
     return (
       <div>
-        <Layout>
-          <Head />
+        <Head />
 
-          <Layout>
-            <LeftMenu />
-            <Layout style={{ padding: '0 24px 24px' }}>
-              <Breadcrumb style={{ margin: '16px 0' }}>
-                <Breadcrumb.Item>Home</Breadcrumb.Item>
-                <Breadcrumb.Item>List</Breadcrumb.Item>
-                <Breadcrumb.Item>App</Breadcrumb.Item>
-              </Breadcrumb>
-              <Content
-                style={{
-                  background: '#fff',
-                  padding: 24,
-                  margin: 0,
-                  minHeight: 280
-                }}
-              >
-                <div className="example-input">
-                  <Input placeholder="标题一" style={{ width: 300 }} />
-                  <Divider />
-                  <Input placeholder="标题二" style={{ width: 300 }} />
-                  <Divider />
-                  <PicturesWall />
-                  <Divider />
-                  <TextArea rows={4} style={{ width: 400 }} />
-                  <Divider />
-                  <Input placeholder="外链接" style={{ width: 300 }} />
-                </div>
-              </Content>
-            </Layout>
-          </Layout>
-        </Layout>
+        <LeftMenu />
+        <div
+          style={{
+            overflow: 'hidden',
+            background: 'gainsboro',
+            padding: '0 24px 24px'
+          }}
+        >
+          <Breadcrumb style={{ margin: '16px 0' }}>
+            <Breadcrumb.Item>Home</Breadcrumb.Item>
+            <Breadcrumb.Item>List</Breadcrumb.Item>
+            <Breadcrumb.Item>App</Breadcrumb.Item>
+          </Breadcrumb>
+          <Content
+            style={{
+              background: '#fff',
+              padding: 24,
+              margin: 0,
+              minHeight: 280
+            }}
+          >
+            <div className="example-input">
+              <Input placeholder="标题一" style={{ width: 300 }} />
+              <Divider />
+              <Input placeholder="标题二" style={{ width: 300 }} />
+              <Divider />
+              <PicturesWall />
+              <Divider />
+              <TextArea rows={4} style={{ width: 400 }} />
+              <Divider />
+              <Input placeholder="外链接" style={{ width: 300 }} />
+            </div>
+          </Content>
+        </div>
       </div>
     );
   }
