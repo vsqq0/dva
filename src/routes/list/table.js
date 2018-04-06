@@ -26,8 +26,8 @@ class TableList extends React.Component {
     this.setState({ loading: true });
     // ajax request after empty completing
     //发送delete请求删除数据
-    await del('/cate_details/'+this.state.selectedRowKeys);
-    this.props.deleteOneData(this.state.selectedRowKeys)
+    await del('/cate_details/' + this.state.selectedRowKeys);
+    this.props.deleteOneData(this.state.selectedRowKeys[0]);
     console.log(this.state.selectedRowKeys);
 
     setTimeout(() => {

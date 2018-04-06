@@ -20,15 +20,17 @@ class App extends Component {
       this.setState({ data: $.setKeyById(data.data.data) });
     }
   }
-  deleteOneData=(id)=>{
+  deleteOneData = id => {
     // todo delete data
-    let data = this.state.data.filter((o,i)=>{
-      if(o.id!==id){
-        return o
+    let data = this.state.data.filter((o, i) => {
+      if (o.id !== id) {
+        return o;
       }
-    })
+      return false;
+    });
+    console.log(data);
     this.setState({ data: data });
-  }
+  };
   getCateData = data => {
     this.setState({ data: data });
   };
@@ -37,7 +39,7 @@ class App extends Component {
       <div>
         <Head />
 
-        <LeftMenu deleteOneData={this.deleteOneData} getCateData={this.getCateData} />
+        <LeftMenu getCateData={this.getCateData} />
         <div
           style={{
             overflow: 'hidden',
@@ -58,7 +60,10 @@ class App extends Component {
               minHeight: 280
             }}
           >
-            <TableList data={this.state.data} />
+            <TableList
+              deleteOneData={this.deleteOneData}
+              data={this.state.data}
+            />
           </Content>
         </div>
       </div>
