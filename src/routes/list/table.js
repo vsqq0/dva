@@ -12,20 +12,21 @@ const columns = [{
   dataIndex: 'time',
 }];
 //填充表格的数据
-const data = [];
-for (let i = 0; i < 46; i++) {
-  data.push({
-    key: i,
-    title: `Edward King ${i}`,
-    title2: 32,
-    time: `London, Park Lane no. ${i}`,
-  });
-}
+// const data = [];
+// for (let i = 0; i < 46; i++) {
+//   data.push({
+//     key: i,
+//     title: `Edward King ${i}`,
+//     title2: 32,
+//     time: `London, Park Lane no. ${i}`,
+//   });
+// }
 
 class TableList extends React.Component {
   state = {
     selectedRowKeys: [], // Check here to configure the default column
     loading: false,
+    data:this.props.data//从menu查询数据传递到table   还要做数据转化
   };
   start = () => {
     this.setState({ loading: true });
@@ -74,7 +75,7 @@ class TableList extends React.Component {
             {hasSelected ? `已选中 ${selectedRowKeys.length} 项` : ''}
           </span>
         </div>
-        <Table rowSelection={rowSelection} columns={columns} dataSource={data} />
+        <Table rowSelection={rowSelection} columns={columns} dataSource={this.state.data} />
       </div>
     );
   }

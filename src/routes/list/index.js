@@ -5,7 +5,7 @@ import './index.less';
 import LeftMenu from '../../components/menu';
 import Head from '../../components/head';
 import TableList from './table.js';
-// import { get } from '../../utils/req'; // , post, put, del
+import { get } from '../../utils/req'; // , post, put, del
 
 // const { SubMenu } = Menu;
 const { Content } = Layout;
@@ -13,14 +13,13 @@ const { Content } = Layout;
 
 class App extends Component {
   state = {
-    a: 1
+    data:[]
   };
 
   async componentDidMount() {
-    // var a = await get('categories');
-    // console.log(a);
-    // var b = await post('categories', { name: 'lion', parent_id: '0' });
-    // console.log(b);
+    var id=window.location.href.split("?")[1];
+    var data=await get('cate_details', { category_id: id });//获取分类详情列表
+    this.setState({data:data});
   }
 
   render() {
@@ -49,7 +48,7 @@ class App extends Component {
               minHeight: 280
             }}
           >
-            <TableList />
+            <TableList data={this.state.data} />
           </Content>
         </div>
       </div>
