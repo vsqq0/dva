@@ -5,8 +5,8 @@ import './index.less';
 import PicturesWall from './pic.js';
 import LeftMenu from '../../components/menu';
 import Head from '../../components/head';
-
-// import { get } from '../../utils/req'; // , post, put, del
+import $ from '../../utils/help';
+import { post } from '../../utils/req'; // , post, put, del
 
 // const { SubMenu } = Menu;
 const { Content } = Layout;
@@ -22,13 +22,22 @@ class App extends Component {
     // console.log(a);
     // var b = await post('categories', { name: 'lion', parent_id: '0' });
     // console.log(b);
+    console.log($.getCookie('category_id'));
   }
+
+  submit = () => {
+    post('cate_details', {
+      category_id: $.getCookie('category_id'),
+      title: '12',
+      text: '321',
+      img: '454'
+    });
+  };
 
   render() {
     return (
       <div>
         <Head />
-
         <LeftMenu />
         <div
           style={{
@@ -51,6 +60,8 @@ class App extends Component {
             }}
           >
             <div className="example-input">
+              <a onClick={this.submit}>提交</a>
+
               <Input placeholder="标题一" style={{ width: 300 }} />
               <Divider />
               <Input placeholder="标题二" style={{ width: 300 }} />
