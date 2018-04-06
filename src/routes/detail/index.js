@@ -13,9 +13,7 @@ const { Content } = Layout;
 const { TextArea } = Input;
 
 class App extends Component {
-  state = {
-    a: 1
-  };
+  state = {};
 
   async componentDidMount() {
     // var a = await get('categories');

@@ -4,28 +4,32 @@ import './index.less';
 import LeftMenu from '../../components/menu';
 import Head from '../../components/head';
 import TableList from './table.js';
-// import { get } from '../../utils/req'; // , post, put, del
+import { get } from '../../utils/req'; // , post, put, del
+import $ from '../../utils/help';
 
 const { Content } = Layout;
 
 class App extends Component {
   state = {
-    a: 1
+    data: []
   };
 
   async componentDidMount() {
-    // var a = await get('cate_details',{category_id:16});
-    // console.log(a);
-    // var b = await post('categories', { name: 'lion', parent_id: '0' });
-    // console.log(b);
+    if ($.getCookie('category_id') !== '') {
+      let data = await get('categories/' + $.getCookie('category_id'));
+      this.setState({ data: $.setKeyById(data.data.data) });
+    }
   }
-
+  getCateData = data => {
+    // console.log(this.state, data);
+    this.setState({ data: data });
+  };
   render() {
     return (
       <div>
         <Head />
 
-        <LeftMenu />
+        <LeftMenu getCateData={this.getCateData} />
         <div
           style={{
             overflow: 'hidden',
@@ -46,7 +50,7 @@ class App extends Component {
               minHeight: 280
             }}
           >
-            <TableList />
+            <TableList data={this.state.data} />
           </Content>
         </div>
       </div>

@@ -15,16 +15,6 @@ const columns = [
     dataIndex: 'time'
   }
 ];
-//填充表格的数据
-const data = [];
-for (let i = 0; i < 46; i++) {
-  data.push({
-    key: i,
-    title: `Edward King ${i}`,
-    title2: 32,
-    time: `London, Park Lane no. ${i}`
-  });
-}
 
 class TableList extends React.Component {
   state = {
@@ -84,7 +74,7 @@ class TableList extends React.Component {
         <Table
           rowSelection={rowSelection}
           columns={columns}
-          dataSource={data}
+          dataSource={this.props.data}
         />
       </div>
     );

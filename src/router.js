@@ -14,15 +14,15 @@ function RouterConfig({ history, app }) {
     },
     {
       path: '/list',
-      // models: () => [import("./models/users")],
-      // models: () => import('./models/users'),
       component: () => import('./routes/list')
     },
     {
       path: '/detail',
-      // models: () => [import("./models/users")],
-      // models: () => import('./models/users'),
       component: () => import('./routes/detail')
+    },
+    {
+      path: '/login',
+      component: () => import('./routes/login')
     }
   ];
 
