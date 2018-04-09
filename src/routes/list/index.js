@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
 import { Layout, Breadcrumb } from 'antd'; // , Upload, Modal, Divider
+import { Upload, message, Button, Icon } from 'antd';
+
 import './index.less';
 import LeftMenu from '../../components/menu';
 import Head from '../../components/head';
 import TableList from './table.js';
-import { get } from '../../utils/req'; // , post, put, del
-import $ from '../../utils/help';
+import { get, put, post } from '../../utils/req'; // , post, put, del
+import $h from '../../utils/help';
+import $ from 'jquery';
 
 const { Content } = Layout;
 
@@ -15,9 +18,9 @@ class App extends Component {
   };
 
   async componentDidMount() {
-    if ($.getCookie('category_id') !== '') {
-      let data = await get('categories/' + $.getCookie('category_id'));
-      this.setState({ data: $.setKeyById(data.data.data) });
+    if ($h.getCookie('category_id') !== '') {
+      let data = await get('categories/' + $h.getCookie('category_id'));
+      this.setState({ data: $h.setKeyById(data.data.data) });
     }
   }
   deleteOneData = id => {
@@ -34,10 +37,34 @@ class App extends Component {
   getCateData = data => {
     this.setState({ data: data });
   };
+
+  a = e => {
+    // e.preventDefault();
+    let config = {
+      headers: { 'Content-Type': false, 'Process-Data': false }
+    };
+    // console.log(e, e.target);
+    var form = new FormData();
+    form.append('names', 12);
+    form.append('img', e.target.files[0]);
+    console.log(e, e.target, e.target.files[0], 111, form.get('img'));
+    // this.ajax('post', '/cate_details', form);
+    post('cate_details', form, config);
+  };
   render() {
     return (
       <div>
         <Head />
+        <Upload
+          name="file"
+          action="cate_details"
+          // headers= {authorization: 'authorization-text'}
+        >
+          <Button>
+            <Icon type="upload" /> Click to Upload
+          </Button>
+        </Upload>
+        <input type="file" onChange={this.a} />
 
         <LeftMenu getCateData={this.getCateData} />
         <div

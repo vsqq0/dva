@@ -30,8 +30,8 @@ export const post = (url, params) => {
  * @param {string} url 必填
  * @returns {Object} params
  */
-export const put = (url, params) => {
-  return axios.put(devUrl(url), params);
+export const put = (url, formData, config) => {
+  return axios.put(devUrl(url), formData, config);
 };
 /**
  * @param {string} url 必填
