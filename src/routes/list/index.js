@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import { Layout, Breadcrumb } from 'antd'; // , Upload, Modal, Divider
-import { Upload, message, Button, Icon } from 'antd';
+import { Upload, Button, Icon } from 'antd';
 
 import './index.less';
 import LeftMenu from '../../components/menu';
 import Head from '../../components/head';
 import TableList from './table.js';
-import { get, put, post } from '../../utils/req'; // , post, put, del
+import { get, post } from '../../utils/req'; // , post, put, del
 import $h from '../../utils/help';
-import $ from 'jquery';
+// import $ from 'jquery';
 
 const { Content } = Layout;
 
