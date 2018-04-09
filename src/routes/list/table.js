@@ -1,6 +1,7 @@
 import React from 'react';
 import { Table, Button, Popconfirm } from 'antd';
 import { del } from '../../utils/req'; // , post, put, del
+import $ from '../../utils/help';
 //表格字段
 const columns = [
   {
@@ -14,7 +15,18 @@ const columns = [
   {
     title: '操作时间',
     dataIndex: 'time'
+  }, {
+    title: '操作',
+    key: 'action',
+    render: (text, record) => (
+      <span>
+        <a onClick={this.update = () => {
+          window.location.href = "#/detail?detailId=" + record.id;
+        }}>修改</a>
+      </span>
+    ),
   }
+
 ];
 
 class TableList extends React.Component {
