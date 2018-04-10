@@ -11,7 +11,7 @@ class App extends Component {
     data: [],
     menuKey: 0,
     menuLoading: false,
-    selectId: 1,
+    selectId: 0,
     kidCateName: ''
   };
 
@@ -43,9 +43,13 @@ class App extends Component {
   // 添加总分类
   addCate = async (name, parentId) => {
     this.setState({ menuLoading: true });
-    await post('/categories', { name: name, parent_id: parentId || 0 });
-    await this.cateReload();
-    message.success('添加成功');
+    if (name !== '') {
+      await post('/categories', { name: name, parent_id: parentId || 0 });
+      await this.cateReload();
+      message.success('添加成功');
+    } else {
+      message.error('分类名称不能为空');
+    }
     this.setState({ menuLoading: false });
   };
 
@@ -57,21 +61,25 @@ class App extends Component {
   // 查询分类的详情列表
   cateClick = async record => {
     $.setCookie('category_id', record.id);
+    this.setState({selectId:record.id});
     if (this.props.getCateData !== undefined) {
       let data = await get('categories/' + record.id);
       this.props.getCateData($.setKeyById(data.data.data));
     }
   };
+  
   render() {
     const columns = [
       {
         title: '',
         dataIndex: 'name',
         key: 'name',
+        
+
         render: (text, record) => (
           <a
             onClick={this.cateClick.bind(this, record)}
-            style={{ fontSize: '14px' }}
+            style={{ fontSize: '14px',backgroundColor:record.id===this.state.selectId?'pink':'white' }}
           >
             {text}
           </a>
@@ -81,6 +89,7 @@ class App extends Component {
         title: '',
         key: 'action',
         render: (text, record) => (
+          
           <span style={{ fontSize: '12px' }}>
             <Popconfirm
               title={
@@ -161,6 +170,11 @@ class App extends Component {
           columns={columns}
           // rowSelection={{ style: { background: 'red' }, type: 'radio' }}
           dataSource={this.state.data}
+          onRow={(record) => {
+            return {
+              onClick: () => {this.setState({selectId:record.id})},
+            };
+          }}
         />
       </div>
     );

@@ -1,31 +1,28 @@
 import React, { Component } from 'react';
-// import ReactDOM from 'react-dom';
-import { Layout, Breadcrumb, Input, Divider } from 'antd'; // , Upload, Modal
+import { Layout, Breadcrumb, Input, Divider,Button } from 'antd'; // , Upload, Modal
 import './index.less';
 import PicturesWall from './pic.js';
 import LeftMenu from '../../components/menu';
 import Head from '../../components/head';
 import $ from '../../utils/help';
-import { post,get } from '../../utils/req'; // , post, put, del
+import { post,get,put } from '../../utils/req'; // , post, put, del
 
-// const { SubMenu } = Menu;
+
 const { Content } = Layout;
 const { TextArea } = Input;
 
 class App extends Component {
   state = {
     detail_id:'',
-    data:[]
+    data:[],
+    id:''
   };
 
   async componentDidMount() {
-    // var a = await get('categories');
-    // console.log(a);
-    // var b = await post('categories', { name: 'lion', parent_id: '0' });
-    // console.log(b);
     //判断是新增还是修改
     var id=window.location.href.split("detailId=")[1];
-    if(id !=null & id!=''){
+    if(id !== null & id!==''){
+      this.setState({id:id});
       this.setState({detail_id:id});
       var data=(await get('cate_details/'+id)).data.data;
       this.setState({data:data});
@@ -33,14 +30,36 @@ class App extends Component {
   }
 
   submit = () => {
-    post('cate_details', {
-      category_id: $.getCookie('category_id'),
-      title: '12',
-      text: '321',
-      img: '454'
-    });
+    console.log(this.state.data);
+    //修改操作
+    if(this.state.id !==null &this.state.id !== ''){
+     put('cate_details',{
+      category_id:this.state.id,
+      title: this.state.data.title,
+      text: this.state.data.text,
+      img: this.state.data.img
+     })
+    }
+    //增加操作
+    else{
+      post('cate_details', {
+        category_id: $.getCookie('category_id'),
+        title: this.state.data.title,
+        text: this.state.data.text,
+        img: this.state.data.img
+      });
+    }
+    
+    
   };
-
+  handleChange=(event,text)=>{
+    console.log(text);
+    let data = Object.assign({}, this.state.data, { [text]: event.target.value })
+    this.setState({
+    data: data
+    })
+    console.log(this.state.data);
+  }
   render() {
     return (
       <div>
@@ -67,17 +86,16 @@ class App extends Component {
             }}
           >
             <div className="example-input">
-              <a onClick={this.submit}>提交</a>
-
-              <Input placeholder="标题一" style={{ width: 300 }} value={this.state.data.title} />
+              <Input placeholder="标题一" style={{ width: 300 }} value={this.state.data.title} onChange={(e) => this.handleChange(e,'title')}/>
               <Divider />
-              <Input placeholder="标题二" style={{ width: 300 }} value={this.state.data.title2}/>
+              <Input placeholder="标题二" style={{ width: 300 }} value={this.state.data.title2} onChange={(e) => this.handleChange(e,'title2')}/>
               <Divider />
               <PicturesWall />
               <Divider />
-              <TextArea rows={4} style={{ width: 400 }} value={this.state.data.text}/>
+              <TextArea rows={4} style={{ width: 400 }} value={this.state.data.text} onChange={(e) => this.handleChange(e,'text')}/>
               <Divider />
-              <Input placeholder="外链接" style={{ width: 300 }} value={this.state.data.link}/>
+              <Input placeholder="外链接" style={{ width: 300 }} value={this.state.data.link} onChange={(e) => this.handleChange(e,'link')}/>
+              <Button onClick={this.submit} style={{background:'#0997F7',color:'white'}}>提交</Button>
             </div>
           </Content>
         </div>
