@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Layout, Breadcrumb } from 'antd'; // , Upload, Modal, Divider
-import { Upload, Button, Icon } from 'antd';
+// import { Upload, Button, Icon } from 'antd';
 
 import './index.less';
 import LeftMenu from '../../components/menu';
@@ -20,6 +20,7 @@ class App extends Component {
   async componentDidMount() {
     if ($h.getCookie('category_id') !== '') {
       let data = await get('categories/' + $h.getCookie('category_id'));
+      console.log(data);
       this.setState({ data: $h.setKeyById(data.data.data) });
     }
   }
@@ -55,16 +56,6 @@ class App extends Component {
     return (
       <div>
         <Head />
-        <Upload
-          name="file"
-          action="cate_details"
-          // headers= {authorization: 'authorization-text'}
-        >
-          <Button>
-            <Icon type="upload" /> Click to Upload
-          </Button>
-        </Upload>
-        <input type="file" onChange={this.a} />
 
         <LeftMenu getCateData={this.getCateData} />
         <div

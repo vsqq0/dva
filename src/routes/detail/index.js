@@ -1,47 +1,77 @@
 import React, { Component } from 'react';
 // import ReactDOM from 'react-dom';
-import { Layout, Breadcrumb, Input, Divider } from 'antd'; // , Upload, Modal
+import { Button, Form, Layout, Breadcrumb, Input, Divider } from 'antd'; // , Upload, Modal
 import './index.less';
-import PicturesWall from './pic.js';
+// import PicturesWall from './pic.js';
 import LeftMenu from '../../components/menu';
 import Head from '../../components/head';
 import $ from '../../utils/help';
-import { post,get } from '../../utils/req'; // , post, put, del
-
+import { post, get } from '../../utils/req'; // , post, put, del
+const FormItem = Form.Item;
 // const { SubMenu } = Menu;
 const { Content } = Layout;
 const { TextArea } = Input;
 
 class App extends Component {
   state = {
-    detail_id:'',
-    data:[]
+    detail_id: '',
+    data: [],
+    file: {},
+    id: window.location.href.split('detailId=')[1]
   };
 
   async componentDidMount() {
-    // var a = await get('categories');
-    // console.log(a);
-    // var b = await post('categories', { name: 'lion', parent_id: '0' });
-    // console.log(b);
     //判断是新增还是修改
-    var id=window.location.href.split("detailId=")[1];
-    if(id !=null & id!=''){
-      this.setState({detail_id:id});
-      var data=(await get('cate_details/'+id)).data.data;
-      this.setState({data:data});
+    var id = window.location.href.split('detailId=')[1];
+    if ((id !== null) & (id !== '')) {
+      this.setState({ detail_id: id });
+      var data = (await get('cate_details/' + id)).data.data;
+      console.log(data);
+      this.setState({ data: data });
     }
   }
 
-  submit = () => {
-    post('cate_details', {
-      category_id: $.getCookie('category_id'),
-      title: '12',
-      text: '321',
-      img: '454'
+  addSubmit = () => {
+    this.props.form.validateFields(async (err, values) => {
+      console.log(values, err);
+      if (!err) {
+        let cate_detail = await post('cate_details', {
+          category_id: $.getCookie('category_id'),
+          title: '12',
+          text: '12'
+        });
+        // this.setState({ id: cate_detail.data.data.id });
+        console.log(cate_detail.data.data.id);
+        let config = {
+          headers: { 'Content-Type': false, 'Process-Data': false }
+        };
+        var form = new FormData();
+        form.append('cate_detail_id', cate_detail.data.data.id);
+        form.append('pic', this.state.file);
+        await post('pics', form, config);
+      }
     });
   };
 
+  updateSubmit = () => {
+    // let config = {
+    //   headers: { 'Content-Type': false, 'Process-Data': false }
+    // };
+    // var form = new FormData();
+    // form.append('category_id', $.getCookie('category_id'));
+    // form.append('title', '12');
+    // form.append('text', '12');
+    // // form.append('img', this.state.file);
+    // post('cate_details', form, config);
+  };
+
+  file = e => {
+    console.log(e.target.files[0]);
+    this.setState({ file: e.target.files[0] });
+  };
+
   render() {
+    const { getFieldDecorator } = this.props.form;
     return (
       <div>
         <Head />
@@ -66,19 +96,56 @@ class App extends Component {
               minHeight: 280
             }}
           >
-            <div className="example-input">
-              <a onClick={this.submit}>提交</a>
-
-              <Input placeholder="标题一" style={{ width: 300 }} value={this.state.data.title} />
-              <Divider />
-              <Input placeholder="标题二" style={{ width: 300 }} value={this.state.data.title2}/>
-              <Divider />
-              <PicturesWall />
-              <Divider />
-              <TextArea rows={4} style={{ width: 400 }} value={this.state.data.text}/>
-              <Divider />
-              <Input placeholder="外链接" style={{ width: 300 }} value={this.state.data.link}/>
-            </div>
+            <Form>
+              <div className="example-input">
+                <span>标题：</span>
+                <FormItem style={{ width: '80%' }}>
+                  {getFieldDecorator('title', {
+                    rules: [
+                      { required: true, message: 'Please input your username!' }
+                    ]
+                  })(<Input placeholder="标题" style={{ width: 300 }} />)}
+                </FormItem>
+                副标题：<FormItem>
+                  {getFieldDecorator('userName', {
+                    rules: [
+                      { required: true, message: 'Please input your username!' }
+                    ]
+                  })(<Input placeholder="副标题" style={{ width: 300 }} />)}
+                </FormItem>
+                上传图片： <input type="file" onChange={this.file} />
+                <FormItem style={{ width: '80%' }}>
+                  {getFieldDecorator('text', {
+                    rules: [
+                      { required: true, message: 'Please input your username!' }
+                    ]
+                  })(<TextArea rows={4} style={{ width: 400 }} />)}
+                </FormItem>
+                <Divider />
+                <Input
+                  placeholder="外链接"
+                  style={{ width: 300 }}
+                  value={this.state.data.link}
+                />
+                {this.state.id ? (
+                  <Button
+                    type="primary"
+                    style={{ margin: 10, display: 'block' }}
+                    onClick={this.updateSubmit}
+                  >
+                    修改
+                  </Button>
+                ) : (
+                  <Button
+                    type="primary"
+                    style={{ margin: 10, display: 'block' }}
+                    onClick={this.addSubmit}
+                  >
+                    提交
+                  </Button>
+                )}
+              </div>
+            </Form>
           </Content>
         </div>
       </div>
@@ -86,4 +153,5 @@ class App extends Component {
   }
 }
 
-export default App;
+const WrapApp = Form.create()(App);
+export default WrapApp;

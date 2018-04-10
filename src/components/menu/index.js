@@ -61,6 +61,7 @@ class App extends Component {
       let data = await get('categories/' + record.id);
       this.props.getCateData($.setKeyById(data.data.data));
     }
+    window.location.hash = 'list';
   };
   render() {
     const columns = [
@@ -154,7 +155,7 @@ class App extends Component {
           />
         </div>
         <Table
-          indentSize={10}
+          // indentSize={10}
           size="small"
           pagination={false}
           loading={this.state.menuLoading}
