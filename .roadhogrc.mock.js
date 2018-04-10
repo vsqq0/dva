@@ -1,25 +1,15 @@
-// const url = 'http://localhost:3000/';
-const url = 'https://coin-cms.herokuapp.com/';
+const url = 'http://localhost:3000/';
+// const url = 'https://coin-cms.herokuapp.com/';
 export default {
-  // '/*': 'https://coin-cms.herokuapp.com/'
-  // '/api/*': 'http://www.zjttmall.com/'
   'get /*': url,
   'post /*': url,
   'put /*': url,
   'delete /*': url
-
-  // proxy: {
-  //   '/api/*': {
-  //     target: 'http://www.zjttmall.com/',
-  //     changeOrigin: true,
-  //     pathRewrite: { '^/api': '/' }
-  //   }
-  // }
-  // proxy: {
-  //   '/api/*': {
+  // proxyTable: {
+  //   '/*': {
   //     target: 'http://localhost:3000/',
   //     changeOrigin: true,
-  //     pathRewrite: { '^/api': '/' }
+  //     pathRewrite: { '^/': '/' }
   //   }
   // }
 };
