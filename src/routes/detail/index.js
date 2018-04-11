@@ -198,5 +198,5 @@ class App extends Component {
     );
   }
 }
-
-export default App;
+const WrapApp = Form.create()(App);
+export default WrapApp;

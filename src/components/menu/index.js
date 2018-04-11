@@ -70,25 +70,27 @@ class App extends Component {
   // 查询分类的详情列表
   cateClick = async record => {
     $.setCookie('category_id', record.id);
-    this.setState({selectId:record.id});
+    this.setState({ selectId: record.id });
     if (this.props.getCateData !== undefined) {
       let data = await get('categories/' + record.id);
       this.props.getCateData($.setKeyById(data.data.data));
     }
+    window.location.hash = 'list';
   };
-  
+
   render() {
     const columns = [
       {
         title: '',
         dataIndex: 'name',
         key: 'name',
-        
-
         render: (text, record) => (
           <a
             onClick={this.cateClick.bind(this, record)}
-            style={{ fontSize: '14px',backgroundColor:record.id===this.state.selectId?'pink':'white' }}
+            style={{
+              fontSize: '14px',
+              color: record.id === this.state.selectId ? '#ff5961' : '#1890ff'
+            }}
           >
             {text}
           </a>
@@ -98,7 +100,6 @@ class App extends Component {
         title: '',
         key: 'action',
         render: (text, record) => (
-          
           <span style={{ fontSize: '12px' }}>
             <Popconfirm
               title={
@@ -179,9 +180,11 @@ class App extends Component {
           columns={columns}
           // rowSelection={{ style: { background: 'red' }, type: 'radio' }}
           dataSource={this.state.data}
-          onRow={(record) => {
+          onRow={record => {
             return {
-              onClick: () => {this.setState({selectId:record.id})},
+              onClick: () => {
+                this.setState({ selectId: record.id });
+              }
             };
           }}
         />
