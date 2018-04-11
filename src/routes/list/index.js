@@ -25,7 +25,7 @@ class App extends Component {
   }
 
   categoriesReload = async () => {
-    let data = await get('categories/' + $.getCookie('category_id'));
+    let data = await get('/categories/' + $.getCookie('category_id'));
     console.log(data);
     this.setState({ data: $.setKeyById(data.data.data).reverse() });
   };
@@ -60,7 +60,7 @@ class App extends Component {
 
   deleteDetail = async id => {
     this.setState({ loading: true });
-    await del('cate_details/' + id);
+    await del('/cate_details/' + id);
     await this.categoriesReload();
     message.success('删除成功');
     this.setState({ loading: false });

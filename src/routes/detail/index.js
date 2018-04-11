@@ -29,7 +29,7 @@ class App extends Component {
   }
 
   cateDetailReload = async () => {
-    var data = await get('cate_details/' + this.state.id);
+    var data = await get('/cate_details/' + this.state.id);
     console.log(data);
     this.setState({ pics: data.data.pics, data: $.filterNull(data.data.data) });
   };
@@ -37,7 +37,7 @@ class App extends Component {
   addSubmit = () => {
     this.props.form.validateFields(async (err, values) => {
       if (!err) {
-        let cate_detail = await post('cate_details', {
+        let cate_detail = await post('/cate_details', {
           category_id: $.getCookie('category_id'),
           ...values
         });
@@ -47,7 +47,7 @@ class App extends Component {
         var form = new FormData();
         form.append('cate_detail_id', cate_detail.data.data.id);
         form.append('pic', this.state.file);
-        await post('pics', form, config);
+        await post('/pics', form, config);
         message.success('添加成功');
         window.location.hash = 'list';
       }
@@ -57,14 +57,14 @@ class App extends Component {
   updateSubmit = () => {
     this.props.form.validateFields(async (err, values) => {
       if (!err) {
-        await put('cate_details/' + this.state.id, $.filterNull(values));
+        await put('/cate_details/' + this.state.id, $.filterNull(values));
         let config = {
           headers: { 'Content-Type': false, 'Process-Data': false }
         };
         var form = new FormData();
         form.append('cate_detail_id', this.state.id);
         form.append('pic', this.state.file);
-        await post('pics', form, config);
+        await post('/pics', form, config);
         message.success('修改成功');
         await this.cateDetailReload();
       }
@@ -72,7 +72,7 @@ class App extends Component {
   };
 
   delPic = async () => {
-    await del('pics/' + this.state.pics[0].id);
+    await del('/pics/' + this.state.pics[0].id);
     this.setState({ pics: [] });
     message.success('删除成功');
   };

@@ -14,9 +14,7 @@ class App extends Component {
   };
 
   async componentDidMount() {
-    // var b = await post('categories', { name: 'lion', parent_id: '0' });
-    // console.log(b);
-    var a = await get('categories');
+    var a = await get('/categories');
     console.log(a.data);
   }
 

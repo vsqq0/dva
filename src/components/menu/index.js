@@ -16,6 +16,7 @@ class App extends Component {
   };
 
   async componentDidMount() {
+    console.log(this.state.selectId);
     console.log($.getCookie('selectId'));
     this.setState({ menuLoading: true });
     await this.cateReload();
@@ -24,7 +25,7 @@ class App extends Component {
 
   // 读取菜单列表
   cateReload = async () => {
-    let categories = await get('categories');
+    let categories = await get('/categories');
     let data = categories.data.data.map((o, i) => {
       o.key = o.id;
       return o;
@@ -71,9 +72,11 @@ class App extends Component {
   // 查询分类的详情列表
   cateClick = async record => {
     $.setCookie('category_id', record.id);
+    $.setCookie('selectId', record.id);
+
     this.setState({ selectId: record.id });
     if (this.props.getCateData !== undefined) {
-      let data = await get('categories/' + record.id);
+      let data = await get('/categories/' + record.id);
       this.props.getCateData($.setKeyById(data.data.data), record);
     }
     window.location.hash = 'list';
@@ -108,7 +111,9 @@ class App extends Component {
             <Popconfirm
               title={
                 <span>
-                  <span> 添加{record.name}的子分类：</span>
+                  <span>
+                    {record.id}:添加{record.name}的子分类：
+                  </span>
                   <Input
                     onBlur={this.setKidCateName.bind(this)}
                     style={{ display: 'block' }}
@@ -139,7 +144,9 @@ class App extends Component {
             <Popconfirm
               title={
                 <span>
-                  <span> 修改{record.name}的分类名：</span>
+                  <span>
+                    {record.id}:修改{record.name}的分类名：
+                  </span>
                   <Input
                     onBlur={this.setKidCateName.bind(this)}
                     style={{ display: 'block' }}
