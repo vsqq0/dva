@@ -13,7 +13,9 @@ class App extends Component {
   state = {
     data: [],
     selectedRowKeys: [], // Check here to configure the default column
-    loading: false
+    loading: false,
+    categoryName: $.getCookie('categoryName'),
+    selectId: $.getCookie('selectId')
   };
 
   async componentDidMount() {
@@ -24,6 +26,7 @@ class App extends Component {
 
   categoriesReload = async () => {
     let data = await get('categories/' + $.getCookie('category_id'));
+    console.log(data);
     this.setState({ data: $.setKeyById(data.data.data).reverse() });
   };
 
@@ -63,8 +66,10 @@ class App extends Component {
     console.log(data);
     this.setState({ data: data });
   };
-  getCateData = data => {
-    this.setState({ data: data });
+  getCateData = (data, record) => {
+    this.setState({
+      data: data.reverse()
+    });
   };
 
   deleteDetail = async id => {
@@ -120,11 +125,6 @@ class App extends Component {
             padding: '0 24px 24px'
           }}
         >
-          <Breadcrumb style={{ margin: '16px 0' }}>
-            <Breadcrumb.Item>Home</Breadcrumb.Item>
-            <Breadcrumb.Item>List</Breadcrumb.Item>
-            <Breadcrumb.Item>App</Breadcrumb.Item>
-          </Breadcrumb>
           <Content
             style={{
               background: '#fff',

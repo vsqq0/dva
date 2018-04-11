@@ -11,11 +11,12 @@ class App extends Component {
     data: [],
     menuKey: 0,
     menuLoading: false,
-    selectId: 0,
+    selectId: $.getCookie('selectId'),
     kidCateName: ''
   };
 
   async componentDidMount() {
+    console.log($.getCookie('selectId'));
     this.setState({ menuLoading: true });
     await this.cateReload();
     this.setState({ menuLoading: false });
@@ -73,7 +74,7 @@ class App extends Component {
     this.setState({ selectId: record.id });
     if (this.props.getCateData !== undefined) {
       let data = await get('categories/' + record.id);
-      this.props.getCateData($.setKeyById(data.data.data));
+      this.props.getCateData($.setKeyById(data.data.data), record);
     }
     window.location.hash = 'list';
   };
@@ -89,7 +90,8 @@ class App extends Component {
             onClick={this.cateClick.bind(this, record)}
             style={{
               fontSize: '14px',
-              color: record.id === this.state.selectId ? '#ff5961' : '#1890ff'
+              color:
+                record.id + '' === this.state.selectId ? '#ff5961' : '#1890ff'
             }}
           >
             {text}
@@ -183,6 +185,7 @@ class App extends Component {
           onRow={record => {
             return {
               onClick: () => {
+                // $.setCookie('selectId', record.id);
                 this.setState({ selectId: record.id });
               }
             };

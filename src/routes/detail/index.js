@@ -17,6 +17,7 @@ class App extends Component {
     data: [],
     file: {},
     pics: [],
+    selectId: $.getCookie('selectId'),
     id: window.location.href.split('detailId=')[1]
   };
 
@@ -94,11 +95,6 @@ class App extends Component {
             padding: '0 24px 24px'
           }}
         >
-          <Breadcrumb style={{ margin: '16px 0' }}>
-            <Breadcrumb.Item>Home</Breadcrumb.Item>
-            <Breadcrumb.Item>List</Breadcrumb.Item>
-            <Breadcrumb.Item>App</Breadcrumb.Item>
-          </Breadcrumb>
           <Content
             style={{
               background: '#fff',
