@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { message, Button, Form, Layout, Breadcrumb, Input } from 'antd'; // , Upload, Modal
+// import ReactDOM from 'react-dom';
 import './index.less';
 // import PicturesWall from './pic.js';
 import LeftMenu from '../../components/menu';
@@ -198,5 +199,4 @@ class App extends Component {
   }
 }
 
-const WrapApp = Form.create()(App);
-export default WrapApp;
+export default App;
