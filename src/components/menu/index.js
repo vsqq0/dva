@@ -91,7 +91,9 @@ class App extends Component {
             style={{
               fontSize: '14px',
               color:
-                record.id + '' === this.state.selectId ? '#ff5961' : '#1890ff'
+                record.id + '' === this.state.selectId + ''
+                  ? '#ff5961'
+                  : '#1890ff'
             }}
           >
             {text}

@@ -30,20 +30,17 @@ class App extends Component {
     this.setState({ data: $.setKeyById(data.data.data).reverse() });
   };
 
-  start = async () => {
+  delAll = async e => {
     this.setState({ loading: true });
-    // ajax request after empty completing
     //发送delete请求删除数据
-    await del('/cate_details/' + this.state.selectedRowKeys);
-    this.deleteOneData(this.state.selectedRowKeys[0]);
-    console.log(this.state.selectedRowKeys);
-
-    setTimeout(() => {
-      this.setState({
-        selectedRowKeys: [],
-        loading: false
-      });
-    }, 1000);
+    await this.state.selectedRowKeys.map(async id => {
+      await del('/cate_details/' + id);
+    });
+    this.setState({
+      selectedRowKeys: [],
+      loading: false
+    });
+    message.success('删除成功');
   };
 
   onSelectChange = selectedRowKeys => {
@@ -55,17 +52,6 @@ class App extends Component {
     window.location.hash = 'detail';
   };
 
-  deleteOneData = id => {
-    // todo delete data
-    let data = this.state.data.filter((o, i) => {
-      if (o.id !== id) {
-        return o;
-      }
-      return false;
-    });
-    console.log(data);
-    this.setState({ data: data });
-  };
   getCateData = (data, record) => {
     this.setState({
       data: data.reverse()
@@ -83,8 +69,12 @@ class App extends Component {
   render() {
     const columns = [
       {
-        title: '标题一',
-        dataIndex: 'title' //对应数据的name
+        title: '标题',
+        dataIndex: 'title'
+      },
+      {
+        title: '副标题',
+        dataIndex: 'subtitle'
       },
       {
         title: '操作',
@@ -108,10 +98,10 @@ class App extends Component {
     ];
 
     const { loading, selectedRowKeys } = this.state;
-    const rowSelection = {
-      selectedRowKeys,
-      onChange: this.onSelectChange
-    };
+    // const rowSelection = {
+    //   selectedRowKeys,
+    //   onChange: this.onSelectChange
+    // };
     const hasSelected = selectedRowKeys.length > 0;
     return (
       <div>
@@ -139,13 +129,14 @@ class App extends Component {
                   新增
                 </Button>
                 <Button
+                  style={{ display: 'none' }}
                   type="primary"
                   disabled={!hasSelected}
                   loading={loading}
                 >
                   <Popconfirm
                     title="确认删除这些数据吗?"
-                    onConfirm={this.start}
+                    onConfirm={this.delAll.bind(this)}
                     okText="删除"
                     cancelText="取消"
                   >
@@ -158,7 +149,7 @@ class App extends Component {
               </div>
               <Table
                 loading={this.state.loading}
-                rowSelection={rowSelection}
+                // rowSelection={rowSelection}
                 columns={columns}
                 dataSource={this.state.data}
               />
