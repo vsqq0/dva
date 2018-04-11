@@ -9,14 +9,6 @@ const columns = [
     dataIndex: 'title' //对应数据的name
   },
   {
-    title: '标题二',
-    dataIndex: 'title2'
-  },
-  {
-    title: '操作时间',
-    dataIndex: 'time'
-  },
-  {
     title: '操作',
     key: 'action',
     render: (text, record) => (
@@ -29,6 +21,14 @@ const columns = [
           }
         >
           修改
+        </a>
+        <span> | </span>
+        <a
+          onClick={() => {
+            del('cate_details/' + record.id);
+          }}
+        >
+          删除
         </a>
       </span>
     )

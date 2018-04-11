@@ -1,47 +1,44 @@
 import React, { Component } from 'react';
-// import ReactDOM from 'react-dom';
-import { Button, Form, Layout, Breadcrumb, Input, Divider } from 'antd'; // , Upload, Modal
+import { message, Button, Form, Layout, Breadcrumb, Input } from 'antd'; // , Upload, Modal
 import './index.less';
 // import PicturesWall from './pic.js';
 import LeftMenu from '../../components/menu';
 import Head from '../../components/head';
 import $ from '../../utils/help';
-import { post, get } from '../../utils/req'; // , post, put, del
+import { post, get, put, del } from '../../utils/req'; // , post, put, del
+
 const FormItem = Form.Item;
-// const { SubMenu } = Menu;
 const { Content } = Layout;
 const { TextArea } = Input;
 
 class App extends Component {
   state = {
-    detail_id: '',
     data: [],
     file: {},
+    pics: [],
     id: window.location.href.split('detailId=')[1]
   };
 
   async componentDidMount() {
     //判断是新增还是修改
-    var id = window.location.href.split('detailId=')[1];
-    if ((id !== null) & (id !== '')) {
-      this.setState({ detail_id: id });
-      var data = (await get('cate_details/' + id)).data.data;
-      console.log(data);
-      this.setState({ data: data });
+    if (this.state.id) {
+      await this.cateDetailReload();
     }
   }
 
+  cateDetailReload = async () => {
+    var data = await get('cate_details/' + this.state.id);
+    console.log(data);
+    this.setState({ pics: data.data.pics, data: $.filterNull(data.data.data) });
+  };
+
   addSubmit = () => {
     this.props.form.validateFields(async (err, values) => {
-      console.log(values, err);
       if (!err) {
         let cate_detail = await post('cate_details', {
           category_id: $.getCookie('category_id'),
-          title: '12',
-          text: '12'
+          ...values
         });
-        // this.setState({ id: cate_detail.data.data.id });
-        console.log(cate_detail.data.data.id);
         let config = {
           headers: { 'Content-Type': false, 'Process-Data': false }
         };
@@ -49,29 +46,42 @@ class App extends Component {
         form.append('cate_detail_id', cate_detail.data.data.id);
         form.append('pic', this.state.file);
         await post('pics', form, config);
+        message.success('添加成功');
+        window.location.hash = 'list';
       }
     });
   };
 
   updateSubmit = () => {
-    // let config = {
-    //   headers: { 'Content-Type': false, 'Process-Data': false }
-    // };
-    // var form = new FormData();
-    // form.append('category_id', $.getCookie('category_id'));
-    // form.append('title', '12');
-    // form.append('text', '12');
-    // // form.append('img', this.state.file);
-    // post('cate_details', form, config);
+    this.props.form.validateFields(async (err, values) => {
+      if (!err) {
+        await put('cate_details/' + this.state.id, $.filterNull(values));
+        let config = {
+          headers: { 'Content-Type': false, 'Process-Data': false }
+        };
+        var form = new FormData();
+        form.append('cate_detail_id', this.state.id);
+        form.append('pic', this.state.file);
+        await post('pics', form, config);
+        message.success('修改成功');
+        await this.cateDetailReload();
+      }
+    });
+  };
+
+  delPic = async () => {
+    await del('pics/' + this.state.pics[0].id);
+    this.setState({ pics: [] });
+    message.success('删除成功');
   };
 
   file = e => {
-    console.log(e.target.files[0]);
     this.setState({ file: e.target.files[0] });
   };
 
   render() {
     const { getFieldDecorator } = this.props.form;
+
     return (
       <div>
         <Head />
@@ -101,32 +111,67 @@ class App extends Component {
                 <span>标题：</span>
                 <FormItem style={{ width: '80%' }}>
                   {getFieldDecorator('title', {
+                    initialValue: this.state.data.title,
                     rules: [
-                      { required: true, message: 'Please input your username!' }
+                      {
+                        required: false,
+                        message: 'Please input your username!'
+                      }
                     ]
                   })(<Input placeholder="标题" style={{ width: 300 }} />)}
                 </FormItem>
                 副标题：<FormItem>
-                  {getFieldDecorator('userName', {
+                  {getFieldDecorator('subtitle', {
+                    initialValue: this.state.data.subtitle,
                     rules: [
-                      { required: true, message: 'Please input your username!' }
+                      {
+                        required: false,
+                        message: 'Please input your username!'
+                      }
                     ]
                   })(<Input placeholder="副标题" style={{ width: 300 }} />)}
                 </FormItem>
-                上传图片： <input type="file" onChange={this.file} />
-                <FormItem style={{ width: '80%' }}>
+                {this.state.pics.length > 0 ? (
+                  <div>
+                    <img
+                      style={{
+                        padding: 10,
+                        height: '100px',
+                        width: '100px'
+                      }}
+                      src={this.state.pics[0].pic.url}
+                      alt={this.state.pics[0].id}
+                    />
+                    <Button onClick={this.delPic}>删除图片</Button>
+                  </div>
+                ) : (
+                  <div style={{ padding: 10 }}>
+                    上传图片： <input type="file" onChange={this.file} />
+                  </div>
+                )}
+                内容：<FormItem style={{ width: '80%' }}>
                   {getFieldDecorator('text', {
+                    initialValue: this.state.data.text,
                     rules: [
-                      { required: true, message: 'Please input your username!' }
+                      {
+                        required: false,
+                        message: 'Please input your username!'
+                      }
                     ]
                   })(<TextArea rows={4} style={{ width: 400 }} />)}
                 </FormItem>
-                <Divider />
-                <Input
-                  placeholder="外链接"
-                  style={{ width: 300 }}
-                  value={this.state.data.link}
-                />
+                外链接：
+                <FormItem style={{ width: '80%' }}>
+                  {getFieldDecorator('link', {
+                    initialValue: this.state.data.link,
+                    rules: [
+                      {
+                        required: false,
+                        message: 'Please input your username!'
+                      }
+                    ]
+                  })(<Input placeholder="外链接" style={{ width: 300 }} />)}
+                </FormItem>
                 {this.state.id ? (
                   <Button
                     type="primary"

@@ -8,6 +8,17 @@ import querystring from 'querystring';
 
 export default class Help {
   /*
+  * 去掉对象为空的键
+  */
+  static filterNull(data) {
+    for (let key in data) {
+      if (data[key] === null || data[key] === undefined) {
+        delete data[key];
+      }
+    }
+    return data;
+  }
+  /*
   * 给数组设置key通过id
   */
   static setKeyById(arr) {

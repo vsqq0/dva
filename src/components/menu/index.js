@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Table, Popconfirm, message, Input } from 'antd';
 import './index.less';
-import { get, del, post } from '../../utils/req';
+import { get, del, post, put } from '../../utils/req';
 import $ from '../../utils/help';
 
 const Search = Input.Search;
@@ -46,6 +46,15 @@ class App extends Component {
     await post('/categories', { name: name, parent_id: parentId || 0 });
     await this.cateReload();
     message.success('添加成功');
+    this.setState({ menuLoading: false });
+  };
+
+  // 修改分类名
+  updateCate = async (name, id) => {
+    this.setState({ menuLoading: true });
+    await put('/categories/' + id, { name: name });
+    await this.cateReload();
+    message.success('修改成功');
     this.setState({ menuLoading: false });
   };
 
@@ -117,7 +126,7 @@ class App extends Component {
             <Popconfirm
               title={
                 <span>
-                  <span> 添加{record.name}的子分类：</span>
+                  <span> 修改{record.name}的分类名：</span>
                   <Input
                     onBlur={this.setKidCateName.bind(this)}
                     style={{ display: 'block' }}
@@ -125,7 +134,7 @@ class App extends Component {
                   />
                 </span>
               }
-              onConfirm={this.addCate.bind(
+              onConfirm={this.updateCate.bind(
                 this,
                 this.state.kidCateName,
                 record.id
