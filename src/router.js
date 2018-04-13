@@ -8,16 +8,19 @@ function RouterConfig({ history, app }) {
   const routes = [
     {
       path: '/app',
-      // models: () => [import("./models/users")],
+      // models: () => [import('./models/example')],
       // models: () => import('./models/users'),
       component: () => import('./routes/App')
     },
     {
       path: '/list',
+      // models: () => [import('./models/list')],
       component: () => import('./routes/list')
     },
     {
+      // path: /\/detail\/?(\d+)?/,
       path: '/detail',
+      // models: () => [import('./models/detail')],
       component: () => import('./routes/detail')
     },
     {

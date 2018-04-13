@@ -7,6 +7,7 @@ import LeftMenu from '../../components/menu';
 import Head from '../../components/head';
 import $ from '../../utils/help';
 import { post, get, put, del } from '../../utils/req'; // , post, put, del
+import { connect } from 'dva';
 
 const FormItem = Form.Item;
 const { Content } = Layout;
@@ -18,19 +19,19 @@ class App extends Component {
     file: {},
     pics: [],
     selectId: $.getCookie('selectId'),
-    id: window.location.href.split('detailId=')[1]
+    detailId: window.location.href.split('detailId=')[1]
   };
 
   async componentDidMount() {
+    // console.log(this.props);
     //判断是新增还是修改
-    if (this.state.id) {
+    if (this.state.detailId) {
       await this.cateDetailReload();
     }
   }
 
   cateDetailReload = async () => {
-    var data = await get('/cate_details/' + this.state.id);
-    console.log(data);
+    var data = await get('/cate_details/' + this.state.detailId);
     this.setState({ pics: data.data.pics, data: $.filterNull(data.data.data) });
   };
 
@@ -57,12 +58,12 @@ class App extends Component {
   updateSubmit = () => {
     this.props.form.validateFields(async (err, values) => {
       if (!err) {
-        await put('/cate_details/' + this.state.id, $.filterNull(values));
+        await put('/cate_details/' + this.state.detailId, $.filterNull(values));
         let config = {
           headers: { 'Content-Type': false, 'Process-Data': false }
         };
         var form = new FormData();
-        form.append('cate_detail_id', this.state.id);
+        form.append('cate_detail_id', this.state.detailId);
         form.append('pic', this.state.file);
         await post('/pics', form, config);
         message.success('修改成功');
@@ -169,7 +170,7 @@ class App extends Component {
                     ]
                   })(<Input placeholder="外链接" style={{ width: 300 }} />)}
                 </FormItem>
-                {this.state.id ? (
+                {this.state.detailId ? (
                   <Button
                     type="primary"
                     style={{ margin: 10, display: 'block' }}
@@ -194,5 +195,14 @@ class App extends Component {
     );
   }
 }
-const WrapApp = Form.create()(App);
-export default WrapApp;
+// const WrapApp = Form.create()(App);
+// export default WrapApp;
+
+export default connect(({ detail, store }) => {
+  return { detail, store };
+})(Form.create({})(App));
+
+// function mapStateToProps({ example, store }) {
+//   return { example, store };
+// }
+// export default connect(mapStateToProps)(App);

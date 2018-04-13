@@ -26,7 +26,6 @@ class App extends Component {
 
   categoriesReload = async () => {
     let data = await get('/categories/' + $.getCookie('category_id'));
-    console.log(data);
     this.setState({ data: $.setKeyById(data.data.data).reverse() });
   };
 
@@ -44,7 +43,6 @@ class App extends Component {
   };
 
   onSelectChange = selectedRowKeys => {
-    console.log('selectedRowKeys changed: ', selectedRowKeys);
     this.setState({ selectedRowKeys });
   };
 

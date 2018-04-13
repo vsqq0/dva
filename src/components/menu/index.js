@@ -16,8 +16,6 @@ class App extends Component {
   };
 
   async componentDidMount() {
-    console.log(this.state.selectId);
-    console.log($.getCookie('selectId'));
     this.setState({ menuLoading: true });
     await this.cateReload();
     this.setState({ menuLoading: false });

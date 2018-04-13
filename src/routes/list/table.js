@@ -46,7 +46,6 @@ class TableList extends React.Component {
     //发送delete请求删除数据
     await del('/cate_details/' + this.state.selectedRowKeys);
     this.props.deleteOneData(this.state.selectedRowKeys[0]);
-    console.log(this.state.selectedRowKeys);
 
     setTimeout(() => {
       this.setState({
@@ -57,7 +56,6 @@ class TableList extends React.Component {
   };
 
   onSelectChange = selectedRowKeys => {
-    console.log('selectedRowKeys changed: ', selectedRowKeys);
     this.setState({ selectedRowKeys });
   };
 
