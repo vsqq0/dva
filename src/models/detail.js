@@ -1,5 +1,5 @@
-import { post, get, put, del } from '../utils/req'; // , post, put, del
-import $ from '../utils/help';
+import { get } from '../utils/req'; // , post, put, del
+// import $ from '../utils/help';
 
 export default {
   namespace: 'detail',
